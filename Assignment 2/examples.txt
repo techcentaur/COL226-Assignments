@@ -1,0 +1,47 @@
+let rho t = match t with "x" -> I 3 | _-> I 0;;
+
+eval rho (Add(Const(1),Const(2)));;
+execute (rho, [], (compile (Add(Const(1),Const(2)))));;
+
+eval rho (Mul(Const(6),Const(6)));;
+execute (rho, [], (compile (Mul(Const(6),Const(6)))));;
+eval rho (Exp(Const(2),Const(4)));;
+execute (rho, [], (compile (Exp(Const(2),Const(4)))));;
+eval rho (Div(Const(6),Const(3)));;
+execute (rho, [], (compile (Div(Const(6),Const(3)))));;
+
+Var("iden1");;
+Var("iden2");;
+
+eval rho (Abs(Const(-1)));;
+execute (rho, [], (compile (Abs(Const(-1)))));;
+eval rho (Proj(Tup([Const(12);Const(121);Const(33)]),Const(2)));;
+execute (rho, [], (compile (Proj(Tup([Const(12);Const(121);Const(33)]),Const(2)))));;
+
+eval rho (Sub(Proj(Tup[Const(2);Const(5);Const(8)],Const(2)),Const(1)));;
+execute (rho, [], (compile (Sub(Proj(Tup[Const(2);Const(5);Const(8)],Const(2)),Const(1)))));;
+eval rho (Mod(Proj(Tup[Const(2);Const(5);Const(8)],Const(2)),Const(2)));;
+execute (rho, [], (compile (Mod(Proj(Tup[Const(2);Const(5);Const(8)],Const(2)),Const(2)))));;
+
+eval rho (Or(
+	Equ(Const(5),Const(5)),
+	And(Equ(Sub(Const(2),Const(1)),Const(1)),
+		Mod(Proj(Tup[Const(2);Const(5);Const(8)],Const(2)),Const(2))
+	)
+));;
+execute (rho, [], (compile (Or(
+	Equ(Const(5),Const(5)),
+	And(Equ(Sub(Const(2),Const(1)),Const(1)),
+		Mod(Proj(Tup[Const(2);Const(5);Const(8)],Const(2)),Const(2))
+	)
+))));;
+
+eval rho (And(Bool(true), Bool(false)));;
+execute (rho, [], (compile (And(Bool(true), Bool(false)))));;
+eval rho (Imp(Not(Imp(Or(Bool(true), Bool(false)), And(Bool(true), Bool(false)))),Imp(And(Bool(true), Bool(false)), Or(Bool(true), Bool(false)))));;
+execute (rho, [], (compile (Imp(Not(Imp(Or(Bool(true), Bool(false)), And(Bool(true), Bool(false)))),Imp(And(Bool(true), Bool(false)), Or(Bool(true), Bool(false)))))));;
+
+eval rho (GTEqu(Const(4),Const(2)));;
+execute (rho, [], (compile (GTEqu(Const(4),Const(2)))));;
+eval rho (LTEqu(Const(4),Const(2)));;
+execute (rho, [], (compile (LTEqu(Const(4),Const(2)))));;
