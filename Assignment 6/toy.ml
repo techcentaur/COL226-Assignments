@@ -30,6 +30,7 @@ let rec unification s1 s2 = match s1 with
 exception TermNotFound;;
 let rec subst term s = match term with
 	V v -> (try List.assoc v s with | Not_found -> term)
+	| N (sym, []) -> N (sym, [])
 	| N(sym, termlist) -> if List.length termlist = 0 then term
 							  else N(sym, List.map ((fun s term -> subst term s) s) termlist);;
 
@@ -49,7 +50,8 @@ List.fold_left f a [b1; ...; bn] is f (... (f (f a b1) b2) ...) bn *)
 
 (* val vars : term -> variable list = <fun> *)
 let rec vars t = match t with
-	V v -> [v] 
+	V v -> [v]
+	| N (sym, []) -> [] 
 	| N (sym, termlist) -> if List.length termlist = 0 then [] else List.fold_left (fun a b -> unification a (vars b)) [] termlist ;;
 
 
@@ -93,3 +95,5 @@ let rec process g p m = match g with
 					   					with | Not_unifiable -> answer g' prest m'; ))) in answer g1 p m;;
 
 (* execution -> process goals program [] *)
+
+let x =  Fact(Atm("male", [N ("pandu", [])]));
