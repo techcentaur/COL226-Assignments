@@ -120,16 +120,20 @@ let rec isavail l e = match (l,e) with
 | [],xs -> false
 | (x,y)::l, (p,q) -> if (x=p) then true else isavail l e;;
 
-let composition s1 s2 = (let rec s3 s1 s2 = 
-	(match (s1,s2) with
-	([],[]) -> []| 
-	(s1,[]) -> s1 |
-	([],s2) -> s2 |
-	((v1,t1)::s1,s2) -> (v1, subst s2 t1)::(s3 s1 s2)) in
-	(let rec s4 ss1 ss2 = (match (ss1,ss2) with
-	| (ss1, []) -> []
-	| (ss1,x::ss2) -> if not (isavail ss1 x) then x::(s4 ss1 ss2)
-						else s4 ss1 ss2) in (s4 (s3 s1 s2) s2)@(s3 s1 s2)));;
+let composition s1 s2 = (
+	let rec s3 s1 s2 = 
+		(
+		match (s1,s2) with
+		([],[]) -> []| 
+		(s1,[]) -> s1 |
+		([],s2) -> s2 |
+		((v1,t1)::s1,s2) -> (v1, subst s2 t1)::(s3 s1 s2)) in
+			
+			(let rec s4 ss1 ss2 = (
+				match (ss1,ss2) with
+				| (ss1, []) -> []
+				| (ss1,x::ss2) -> if not (isavail ss1 x) then x::(s4 ss1 ss2)
+				else s4 ss1 ss2) in (s4 (s3 s1 s2) s2)@(s3 s1 s2)));;
 
 
 (*7*)
