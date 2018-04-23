@@ -172,7 +172,7 @@ let rec executekrivine (prog: program) (env: environmentCLOS): answer = match pr
 					)
 	| _-> raise ReturnEmpty;;
 
-
+(* 
 let p = App(Abs("x", Add(Var "x", Int 7)), Int 3);; 
 
 let pp = App(Abs("x", Add(Var "x", (Sub(Int 10, Var "x")))), Int 3);; 
@@ -186,4 +186,4 @@ let newp = [pp];;
 executekrivine newp [];;
 
 let newp = [ppp];;
-executekrivine newp [];;
+executekrivine newp [];; *)
