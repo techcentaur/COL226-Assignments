@@ -31,6 +31,7 @@ hastype(Gamma, boolop(E1, E2), bool) :- hastype(Gamma, E1, bool), hastype(Gamma,
 
 hastype(Gamma, andop(E1, E2), T) :- hastype(Gamma, boolop(E1, E2), T).
 hastype(Gamma, orop(E1, E2), T) :-hastype(Gamma, boolop(E1, E2), T).
+hastype(Gamma, impop(E1, E2), T) :-hastype(Gamma, boolop(E1, E2), T).
 hastype(Gamma, notop(E1), bool) :- hastype(Gamma, E1, bool).
 
 
@@ -59,9 +60,11 @@ hastype(Gamma, tuple_n([]), prod_n([])).
 hastype(Gamma, tuple_n([E1|E]), prod_n([T1|T])) :- hastype(Gamma, E1, T1), hastype(Gamma, tuple_n(E), prod_n(T)).
 
 /** expressions using projection operations. */
+checknew([Y|_], 0, A) :- !.
+checknew([_|Y], K, A) :- K>0, K1 is K-1, checknew(Y, K1, A). 
 
 hastype(Gamma, proj_n(tuple_n([Ek | E]), 0), T) :- hastype(Gamma, Ek, T), !.
-hastype(Gamma, proj_n(tuple_n([E1 | E]), K), T) :- hastype(Gamma, proj_n(tuple_n(E), K-1), T).
+hastype(Gamma, proj_n(tuple_n(X), K), T) :- checknew(X, K, A), hastype(Gamma, E, T).
 
 /** D definitions */
 
@@ -70,9 +73,12 @@ sequential definitions D1; D2
 parallel definitions D1 || D2
 local definitions local D1 in D2 end */
 
-typeElaborates(Gamma, (v(X), E), [v(X), T]) :- hastype(Gamma, E, T).
+check((v(X), W), (v(X), Z)) :- !, false.
+check((v(X), W), (v(Y), Z)) :- !, true.
+
+typeElaborates(Gamma, (v(X), E), [(v(X), T)]) :- hastype(Gamma, E, T).
 typeElaborates(Gamma, sequential(D1, D2), Gamma3) :- append(Gamma1, Gamma2, Gamma3), typeElaborates(Gamma, D1, Gamma1), append(Gamma, Gamma1, Gamma4), typeElaborates(Gamma4, D2, Gamma2).
-typeElaborates(Gamma, parallel(D1, D2), Gamma3) :- append(Gamma1, Gamma2, Gamma3), typeElaborates(Gamma, D1, Gamma1), typeElaborates(Gamma, D2, Gamma2).
+typeElaborates(Gamma, parallel(D1, D2), Gamma3) :- check(D1, D2) ,append(Gamma1, Gamma2, Gamma3), typeElaborates(Gamma, D1, Gamma1), typeElaborates(Gamma, D2, Gamma2).
 typeElaborates(Gamma, local(D1, D2), Gamma_new) :- typeElaborates(Gamma, D1, Gamma1), append(Gamma, Gamma1, Gamma2),typeElaborates(Gamma2, D2, Gamma_new).
 
 
@@ -108,7 +114,7 @@ hastype([(v(x),int), (v(y), char), (v(z), bool), (v(w), int)], letDinE((v(x), 3)
 
 Counter-examples that it can not work as polymorphic type inference.
 
-1. hastype([(v(x),int), (v(y), float), (v(z), bool), (v(w), int)], tuple_n([v(p), v(q)]), prod_n([T1, T2])).
+1. hastype([(v(x),int), (v(y), float), (v(z), bool), (v(w), int)], tuple_n([v(p, v(q)]), prod_n([T1, T2])).
 
 - In this example, it suggests only one type, because we used '!' operator. Since, we need cut operator to make it work like
 type inference, it can't work as polymorphic type inference altogether.
