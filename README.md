@@ -11,6 +11,7 @@ The code in this repository is relevant to the assignments given in the course C
 	- For more elaboration on Krivine Machine click [here](https://github.com/techcentaur/Krivine-Machine).
 
 - [Assign5](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%205): Type checker written in Prolog
+- [Assign6](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%206): Toy interpreter Prolog
 
 
 ## Contributing
