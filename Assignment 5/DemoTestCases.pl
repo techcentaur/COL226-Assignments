@@ -7,7 +7,7 @@ hastype([],-652,T).
 hastype([],true,T).
 
 %arithmetic
-hastype([],addop(subop(2,5), divop(6,mulopop(2,5))),T).
+hastype([],addop(subop(2,5), divop(6,mulop(2,5))),T).
 
 %boolean
 hastype([(v("X"),(bool))],andop(impop(orop(v("X"), false), true),impop(v("X"), notop(false))),T).
@@ -66,8 +66,6 @@ typeElaborates([(v(x),(int))],sequential((v(z),(true)),(v(y),(false))),Gamma).
 typeElaborates([(v(x),(int))],parallel((v(z),(9)),(v(y),(0))),Gamma).
 typeElaborates([(v(x),(int))],local((v(z),(9)),(v(y),(4))),Gamma).
 typeElaborates([(v(x),(int))],parallel(sequential((v(z),(8)),(v(y),(true))),(v(y),(false))),Gamma).
-
-
 typeElaborates([(v(x),(int))],sequential(parallel((v(z),(45)),(v(y),(false))),(v(y),(8))),Gamma).
 
 

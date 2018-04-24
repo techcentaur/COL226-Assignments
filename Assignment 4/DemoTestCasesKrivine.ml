@@ -53,3 +53,6 @@ krivinemachine x [];;
 
 let x = (CLtype(Ifthenelse(Grt(Int(8),Int(2)),App(Abs("x", Div(Var("x"),Int(2))),Int(2)),App(Abs("x", Mul(Var("x"),Add(Var("x"),Int(1)))),Int(2))),[]));;
 krivinemachine x [];;
+
+let x = (CLtype(Ifthenelse(Grt(Int(8),Int(2)),Add(Int(1), Int(2)), Div(Int(9), Int(0))),[]));;
+krivinemachine x [];;

@@ -39,3 +39,6 @@ execute( compile x);;
 
 let x = (App(Abs("x",App(Abs("d",Mul(Var("d"),Int(2))),Int(2))),Int(2)));;
 execute( compile x);;
+
+let x = (Ifthenelse(Grt(Int(4),Int(2)),Add(Int(1),Int(3)),Div(Int(9),Int(0))));;
+execute( compile x);;
