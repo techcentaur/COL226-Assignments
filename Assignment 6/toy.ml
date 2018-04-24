@@ -10,8 +10,8 @@ type symbol = string
 							and atom = predicate*(term list)
 								and goal = head list;;
 
-type substitution = (variable*term) list;;
 
+type substitution = (variable*term) list;;
 
 (*mergeing x in s*)
 (* val merge : 'a -> 'a list -> 'a list = <fun> *)
@@ -75,7 +75,7 @@ let rec predicate_to_function_symbol p = match p with Atm(x, y) -> N (x, y);;
 (* val function_to_predicate_symbol : term -> head = <fun> *)
 let rec function_to_predicate_symbol p = match p with N (x, y) -> Atm (x, y)| _-> raise Invalid;;
 
-(* exception DONE;; *)
+exception GOALS_TERMINATED
 (* (g: goals; p: program; m: mgu) *)
 let rec process g p m = match g with
  			[] -> true
@@ -85,15 +85,53 @@ let rec process g p m = match g with
 						  	Fact fact -> (try 
 						  				(let u = mgu (predicate_to_function_symbol fact) (predicate_to_function_symbol g') in
 						  				let goal = List.map ((fun a t -> subst t a) u) (List.map predicate_to_function_symbol grest) in
-						  				if process (List.map function_to_predicate_symbol goal) p (m' @ u) then answer g' prest m' else answer g' prest m')
-						  				 with | Not_unifiable -> answer g' prest m';)
+						  				if process (List.map function_to_predicate_symbol goal) p (m'@u) then
+						  					(print_string "true\n" ; 
+						  					let wait = read_line() in
+						  						if (wait = ";") then answer g' prest m'
+						  						else raise_notrace GOALS_TERMINATED)
+						  					 else answer g' prest m')
+						  				 with 
+						  					| Not_unifiable -> answer g' prest m';)
 					   	    |Rule rule -> (try
 					   	  			    (let f = fst rule in
 				   						let u = mgu (predicate_to_function_symbol f) (predicate_to_function_symbol g') in
 				   						let goal = unification (List.map ((fun a t -> subst t a) u) (List.map predicate_to_function_symbol grest)) (List.map ((fun a t -> subst t a) u) (List.map predicate_to_function_symbol (snd rule))) in
-				   						if process (List.map function_to_predicate_symbol goal) p (m' @ u) then answer g' prest m' else answer g' prest m' )
+				   						if process (List.map function_to_predicate_symbol goal) p (m' @ u) then 
+				   							(print_string "true\n";
+				   							let w = read_line() in 
+				   								if (w=";") then answer g' prest m' else raise GOALS_TERMINATED
+				   							)
+				   							else answer g' prest m')
 					   					with | Not_unifiable -> answer g' prest m'; ))) in answer g1 p m;;
 
 (* execution -> process goals program [] *)
 
-let x =  Fact(Atm("male", [N ("pandu", [])]));
+
+
+
+(* examples *)
+let a = N("a", []);; 
+let b = N("b", []);; 
+let c = N("c", []);; 
+let d = N("d", []);; 
+
+let x = V "X";;
+let y = V "Y";;
+
+let f1 = Atm("Loves", [a;b]) 
+let f2 = Atm("Loves", [b;a]) 
+let f3 = Atm("Loves", [a;c])
+let f4 = Atm("Loves", [a;d])
+
+let r1 = (Atm("Loves", [x;y]),[(Atm("Loves", [y;x]))])
+
+let goal = [f1];;
+let prog = [Fact f1; Rule r1];;
+
+process goal prog [];;
+
+let goal1 = [ Atm ("Loves",[a;x])];;
+let prog1 = [Fact f1; Fact f3; Fact f4];;
+
+process goal1 prog1 [];;
