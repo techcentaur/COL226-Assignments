@@ -67,7 +67,6 @@ let rec varsTerm term =  match term with | C c -> []  | V v -> [v] | A(_, termli
 
 let rec varsGoals goals = match goals with | [] -> [] | A(_, termlist)::a -> unification (List.fold_left (fun x t -> unification x (varsTerm t)) [] termlist) (varsGoals a) ;;
 
-
 let clausestruct clause = match clause with | Fact h -> (h, []) | Rule (h,b) -> (h, b);;
 
 (* backtracking *)
