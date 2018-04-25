@@ -14,6 +14,16 @@ The code in this repository is relevant to the assignments given in the course C
 - [Assign6](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%206): Toy interpreter Prolog
 
 
+## Assignment-Demos
+
+- Assignment 1, 2, 3 are fine and working correctly.
+- Assignment 4
+	- Parallel calls of krivine machine, even though correct, but needn't be implemented.
+	- SECD machine should give an error in a case like - ```if true then 2+3 else 9/0``` but my secd machine evaluates boolean case first and then decides which expression to be evaluated next, which is a minor error.
+- Assigment 5
+	- In my code there was a possiblity of more than one type assumptions created in the output for a single variable, which is wrong or popping order should be set accordingly.
+
+
 ## Contributing
 Found a bug or have a suggestion? Feel free to create an issue or make a pull request!
 
