@@ -14,7 +14,7 @@ The code in this repository is relevant to the assignments given in the course C
 - [Assign6](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%206): Toy interpreter Prolog.
 - [Assign7](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%207): Front-end for toy-interpreter.
 
-## Assignment-Demos
+## Demo-Results
 
 - Assignment 1, 2, 3 are fine and working correctly.
 - Assignment 4
@@ -35,10 +35,14 @@ The code in this repository is relevant to the assignments given in the course C
 [Prof. Sanjiva Prasad](http://www.cse.iitd.ernet.in/~sanjiva/)
 
 
-## Contributing
-Found a bug or have a suggestion? Feel free to create an issue and make a pull request!
+## Support
+If you are having some kind of difficulty understanding a part of the code, feel free to create an issue. Also, feel free to improve the code by forking it over.
+
 
 ## Attention
 If this code is one of your assignments, I strictly recommend you to try it out first by yourself and then come and have a look, if needed. Otherwise, feel free to use it if you want to expand the language or for any other purpose.
 
+## MOSS
+- IIT Delhi uses a tool named MOSS (Measure Of Software Similarity) to detect similarity in code, even though it will be hard to detect copying while working with OCaml given that it's a less-typed functional programming language, and more or less there will always be a similarity around 30%. But still, if you are copying the code from here, make sure to build sufficient changes or prepare to fail if caught.
 
+- Registering for MOSS service is free. So do check your similarity score, if copying, before submitting the assignment and aim at a score below 30.
