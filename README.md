@@ -10,8 +10,8 @@ The code in this repository is relevant to the assignments given in the course C
 - [Assign4](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%204): Abstract Machines.
 	- For more elaboration on Krivine Machine click [here](https://github.com/techcentaur/Krivine-Machine).
 
-- [Assign5](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%205): Type checker written in Prolog
-- [Assign6](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%206): Toy interpreter Prolog
+- [Assign5](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%205): Type checker written in Prolog.
+- [Assign6](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%206): Toy interpreter Prolog.
 - [Assign7](https://github.com/techcentaur/COL226-Assignments/tree/master/Assignment%207): Front-end for toy-interpreter.
 
 ## Assignment-Demos
@@ -23,9 +23,9 @@ The code in this repository is relevant to the assignments given in the course C
 - Assignment 5
 	- In my code there was a possiblity of more than one type assumptions created in the output for a single variable, which is wrong or popping order should be set accordingly.
 - Assignment 6
-	- Working correctly, cut implemented by force enter.
+	- Working correctly and cut implemented by forced enter, in a way, like actual prolog.
 - Assignment 7
-	- `lexer.mll` working correctly, `parser.mly` is causing some errors, that would be hard to correct and will cause major changes in the already coded program. The semester is over and I am not going to complete it. Let's leave something incomplete.
+	- `lexer.mll` working correctly and `parser.mly` is causing some errors, that would be hard to correct and will cause major changes in the already coded program. The semester is over and I am not going to complete it. Let's leave something incomplete.
 
 ## Books 
 - [Programming Language Pragmatics](https://www.amazon.com/Programming-Language-Pragmatics-Third-Michael/dp/0123745144) by Michael Scott. 
@@ -36,7 +36,7 @@ The code in this repository is relevant to the assignments given in the course C
 
 
 ## Contributing
-Found a bug or have a suggestion? Feel free to create an issue or make a pull request!
+Found a bug or have a suggestion? Feel free to create an issue and make a pull request!
 
 ## Attention
 If this code is one of your assignments, I strictly recommend you to try it out first by yourself and then come and have a look, if needed. Otherwise, feel free to use it if you want to expand the language or for any other purpose.
