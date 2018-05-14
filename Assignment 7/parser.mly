@@ -1,37 +1,50 @@
-/* File parser.mly */
 %{
   open Toy
   open Printf
 %}
 
-%token DOT COMMA EQU NOTEQ LP RP LSQ RSQ NOT OR DEL EOF
-%token EOL
+/*
+- goal = GL of term list
+- clause = term list
+type clause =
+    | Fact of head
+    | Rule of head * body;;
+type goal = atomic_formula list;;
+type program = clause list;;*/
+
+
+%token LP RP END COMMA EQU NOTEQ LSQ RSQ NOT OR SEP EOF
 %token <string> V C
 %start main
+%start goal
 %type <Toy.program> main
 %type <Toy.goal> goal
 %%
 main:
-    | EOL { [] }
-    | clause main { ($1)::($2) };
+  | EOF     { ([Fact(A("file_end",[]))]) }
+  | clausee END { ($1) }
+;
 goal:
-    | atom_list DOT {$1};
-atom_list:
-  | atom { [$1] }
-  | atom COMMA atom_list {($1)::($3)};
-clause:
-  | atom DOT { Fact(A($1,[]))}
-  | atom DEL atom_list DOT { Rule(A($1,[]), [A($3,[])])};
-atom:
-  | NOT LP atom RP  {A("$not",[N($3)]) }
-  | C LP term_list RP { A(Sym($1),$3) }
-  | term EQU term  { A("$eq",[$1;$3]) }
-  | term NOTEQ term { A("$neq",[$1;$3]) }
-  | LP atom RP { $2 };
-term_list:
-  | term { [$1] }
-  | term COMMA term_list { ($1)::($3) };
-term:
-  | V   { V($1) }
-  | C   { C($1) }
-  | atom   { A($1,[]) };
+  | goal_continue END    {$1}
+;
+clausee:
+  | myclause { [Fact($1)] }
+  | myclause SEP goal_continue   {[Rule($1,$3)]}
+;
+myclause:
+  | LSQ myclause OR myclause RSQ  {A("", [$2; $4])}
+  | LSQ RSQ        { A("", []) }
+  | LSQ myclause RSQ    { A("", [$2; A("", [])])}
+  | LSQ myclause COMMA list RSQ   { A("", [$2; $4])}
+  | V    { V($1) }
+  | C           { C($1) }
+  | C LP goal_continue RP     { A($1,$3)}
+  | LP myclause RP      { $2 }
+;
+list :
+  | myclause     { A ("", [$1; A("", [])]) }
+  | myclause COMMA list   { A ("", [$1;$3]) }
+;
+goal_continue:
+  | myclause            { [$1] }
+  | myclause COMMA goal_continue     { ($1::$3) }
