@@ -1,0 +1,49 @@
+Test case 1
+Variables: X, Y
+Constants: john, mary, andrew doe
+Note: andrew doe is one constant i.e. It should be a 2-ary term having a function symbol and two child constant terms
+
+Program:
+
+let p1 = [
+Fact( A ("male", [C "john"]));
+Fact( A ("parent", [C "john"]));
+Rule(A ("father", [V "X"]), [ A("male", [V "X"]); A("parent", [V "X"])]);
+Fact( A ("female", ([C "mary"])))
+];;
+
+Goal:
+let goal11 = [] (* no goal *)
+let goal12 = [A("male", [C "john"])]
+let goal13 = [A("male", [C "andrew"])]
+let goal14 = [A("male", [V "X"])]
+let goal15 = [A("female", [V "X"]); A("father", [C "john"])]
+let goal16 = [A("father", [V "X"]);A("father", [ V "Y"])];;
+
+Test case 2
+Variables: X, Y
+Constants: a,b,c,d
+
+Program:
+let p2 = [
+Fact(A("edge", [C "a"; C "b"]));
+Fact(A("edge", [C "b"; C "c"]));
+Fact(A("edge", [C "c"; C "d"]));
+Fact(A("edge", [C "a"; C "d"]));
+Rule(A("path", [V "X"; V "Y"]), [A("edge", [V "X";V "Y"])]);
+Rule(A("path", [V "X"; V "Y"]), [A("edge", [V "X";V "Z"]); A("path", [V "Z";V "Y"])])];;
+
+Test case:
+let goal21 = [A("path", [C "a"; C "c"])];;
+let goal22 = [A("edge", [C "a"; V "X"])];;
+let goal23 = [A("path", [C "a"; V "X"])];;
+let goal24 = [A("edge", [V "X"; V "Y"])];;
+let goal25 = [A("path", [V "X"; V "Y"])];;
+
+let goal26 = [A("path", [V "X";V "Y"])];;
+
+
+
+
+
+
